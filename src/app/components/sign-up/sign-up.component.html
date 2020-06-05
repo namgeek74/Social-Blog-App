@@ -1,0 +1,44 @@
+<div class="auth-page">
+    <div class="container page">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3 col-xs-12">
+                <h1 class="text-xs-center">Sign up</h1>
+                <p class="text-xs-center">
+                    <a [routerLink]="['/login']">Have an account?</a>
+                </p>
+
+                <ul *ngFor='let item of error' class="error-messages">
+                    <li *ngIf='submitted && error'>{{item}} {{a[item]}}</li>
+                    <!-- <li *ngIf='submitted && form.controls.username.errors?.required'>User name is required. Try again!</li>
+            <li *ngIf='submitted && form.controls.email.errors?.email'>Email is invalid. Try again!</li>
+            <li *ngIf='submitted && form.controls.email.errors?.required'>Email is required. Try again!</li>
+            <li *ngIf='submitted && form.controls.password.errors?.minlength'>Password need at least 8 characters. Try
+              again!</li>
+            <li *ngIf='submitted && form.controls.password.errors?.maxlength'>Password maximum length of 20 characters. Try
+              again!</li>
+            <li *ngIf='submitted && form.controls.password.errors?.required'>Password is required. Try again!</li> -->
+                </ul>
+
+                <form [formGroup]='form' (ngSubmit)="onSubmit()">
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="text" placeholder="Your Name"
+                            formControlName='username'>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="text" placeholder="Email"
+                            formControlName='email'>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="password" placeholder="Password"
+                            formControlName='password'>
+                    </fieldset>
+                    <button class="btn btn-lg btn-primary pull-xs-right">
+                        Sign up
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

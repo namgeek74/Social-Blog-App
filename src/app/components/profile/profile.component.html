@@ -1,0 +1,83 @@
+<div class="profile-page">
+
+    <div class="user-info">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-12 col-md-10 offset-md-1">
+                    <img [src]="account?.image == undefined ? url : account.image" class="user-img" />
+                    <h4>{{account?.username}}</h4>
+                    <p>
+                        {{account?.bio}}
+                    </p>
+                    <button class="btn btn-sm btn-outline-secondary action-btn" *ngIf=!isAuthor
+                        (click)="handleFollow(account?.following)">
+                        <i class="ion-plus-round"></i>
+                        &nbsp; {{renderFollow}} {{account?.username}}
+                    </button>
+                    <a class="btn btn-sm btn-outline-secondary action-btn" *ngIf=isAuthor [routerLink]="['/setting']"
+                        routerLinkActive="router-link-active">
+                        <i class="ion-gear-a"></i>
+                        Edit Profile Settings
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-md-10 offset-md-1">
+                <div class="articles-toggle">
+                    <ul class="nav nav-pills outline-active">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="handleFavorites(1)" [ngClass]="{'active': type === 1}">
+                                My Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="handleFavorites(2)" [ngClass]="{'active': type === 2}">
+                                Favorited Articles</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="article-preview" *ngFor="let item of listArticles; let i = index">
+                    <div class="article-meta">
+                        <a><img [src]="item.author.image" [routerLink]="['/profile', item.author.username]" /></a>
+                        <div class="info">
+                            <a href="" class="author" [routerLink]="['/profile', item.author.username]"
+                                routerLinkActive="router-link-active">{{item.author.username}}</a>
+                            <span class="date">{{item.updatedAt | date: 'longDate'}}</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm pull-xs-right"
+                            [ngClass]="{'active': item.favorited}" (click)='handleLike(item.slug, item.favorited, i)'>
+                            <i class="ion-heart"></i> {{item.favoritesCount}}
+                        </button>
+                    </div>
+                    <a class="preview-link" [routerLink]="['/article', item.slug]"
+                        routerLinkActive="router-link-active">
+                        <h1>{{item.title}}</h1>
+                        <p>This is the description for the post.</p>
+                        <span>Read more...</span>
+                    </a>
+                </div>
+
+
+            </div>
+
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" *ngFor="let item of pages; index as i"
+                    [ngClass]="i*5 === currentIndex ? 'active':''">
+                    <a class="page-link ng-binding" (click)="handlePagination(5*i)">{{item}}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>

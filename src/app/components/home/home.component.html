@@ -1,0 +1,79 @@
+<div class="home-page">
+
+    <div class="banner">
+        <div class="container">
+            <h1 class="logo-font">Blog App</h1>
+            <p>A place to share your knowledge.</p>
+        </div>
+    </div>
+
+    <div class="container page">
+        <div class="row">
+
+            <div class="col-md-9">
+                <div class="feed-toggle">
+                    <ul class="nav nav-pills outline-active">
+                        <li class="nav-item" (click)="handleYourFeed()">
+                            <a class="nav-link" *ngIf=checkLoggedIn [ngClass]="checkYourFeed ? 'active': ''">Your
+                                Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="global ? 'active' : ''" (click)="handleGlobal()">Global Feed
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="checkTabTag">
+                            <a class="nav-link active">#{{nameTag}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="article-preview" *ngFor="let item of listArticles; let i = index">
+                    <div class="article-meta">
+                        <a [routerLink]="['/profile/', item.author.username ]"
+                            routerLinkActive="router-link-active"><img
+                                [src]="item.author.image != undefined ? item.author.image : urlPic" /></a>
+                        <div class="info">
+                            <a [routerLink]="['/profile/', item.author.username ]"
+                                class="author">{{item.author.username}}</a>
+                            <span class="date">{{item.updatedAt | date: 'longDate'}}</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm pull-xs-right"
+                            [ngClass]="item.favorited ? 'active' : ''"
+                            (click)="handleFavorite(item.slug, item.favorited, i)">
+                            <i class="ion-heart"></i> {{item.favoritesCount}}
+                        </button>
+                    </div>
+                    <a class="preview-link" (click)="handleEditor(item.slug)">
+                        <h1>{{item.title}}</h1>
+                        <p>This is the description for the post.</p>
+                        <span>Read more...</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <p>Popular Tags</p>
+
+                    <div class="tag-list">
+                        <a class="tag-pill tag-default" *ngFor="let item of tags" (click)="handleTag(item)">{{item}}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" *ngFor="let item of pages; index as i"
+                    [ngClass]="i*10 === currentIndex ? 'active':''">
+                    <a class="page-link ng-binding" (click)="handlePagination(10*i)">{{item}}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+
+</div>

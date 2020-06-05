@@ -1,0 +1,36 @@
+<div class="auth-page">
+    <div class="container page">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3 col-xs-12">
+                <h1 class="text-xs-center">Sign in</h1>
+                <p class="text-xs-center">
+                    <a [routerLink]="['/register']">Need an account?</a>
+                </p>
+
+                <ul class="error-messages">
+                    <li *ngIf='submitted && error'>Email or password {{error}}</li>
+                    <!-- <li *ngIf='submitted && form.controls.email.errors?.email'>Email is invalid. Try again!</li>
+            <li *ngIf='submitted && form.controls.email.errors?.required'>Email is required. Try again!</li>
+            <li *ngIf='submitted && form.controls.password.errors?.minlength'>Password need at least 8 characters. Try again!</li>
+            <li *ngIf='submitted && form.controls.password.errors?.required'>Password is required. Try again!</li> -->
+                </ul>
+
+                <form name='login' (ngSubmit)="onSubmit()" [formGroup]="form">
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="email" placeholder="Email"
+                            formControlName="email">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="password" placeholder="Password"
+                            formControlName="password">
+                    </fieldset>
+                    <button class="btn btn-lg btn-primary pull-xs-right">
+                        Sign in
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

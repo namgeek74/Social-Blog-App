@@ -1,0 +1,52 @@
+<div class="editor-page">
+    <div class="container page">
+        <div class="row">
+
+            <div class="col-md-10 offset-md-1 col-xs-12">
+
+                <ul class="error-messages">
+                    <li *ngIf="submitted && articleForm['controls'].title.errors?.required">title can't be blank</li>
+                    <li *ngIf="submitted && articleForm['controls'].title.errors?.minlength">title is too short (minimum
+                        is 1 character)</li>
+                    <li *ngIf="submitted && articleForm['controls'].body.errors?.required">body can't be blank</li>
+                    <li *ngIf="submitted && articleForm['controls'].description.errors?.required">description can't be
+                        blank</li>
+                    <li *ngIf="submitted && articleForm['controls'].description.errors?.minlength">description is too
+                        short (minimum
+                        is 1 character)</li>
+                </ul>
+
+                <form [formGroup]="articleForm">
+                    <fieldset>
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Article Title"
+                                formControlName="title">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control" placeholder="What's this article about?"
+                                formControlName="description">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)"
+                                formControlName="body"></textarea>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter tags" formControlName="tagList"
+                                (keyup.enter)="handleTag()">
+                            <div class="tag-list">
+                                <span class="tag-default tag-pill" *ngFor="let tag of tagLists">
+                                    {{tag}}
+                                </span>
+                            </div>
+                        </fieldset>
+                        <button class="btn btn-lg pull-xs-right btn-primary" type="button"
+                            routerLinkActive="router-link-active" (click)="onSubmit()">
+                            Publish Article
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
