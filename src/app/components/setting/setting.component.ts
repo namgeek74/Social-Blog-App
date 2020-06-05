@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/model/model';
 
 @Component({
   selector: 'app-setting',
