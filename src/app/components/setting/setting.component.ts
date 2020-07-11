@@ -28,28 +28,22 @@ export class SettingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private getProfile: ProfileService,
+    private profileService: ProfileService,
     private auth: AuthService
   ) { }
 
   ngOnInit() {
-    // this.getProfile.getProfile().subscribe((data: ProfileRes) => {
-    //   console.log(data);
-    //   this.data = data;
-    //   this.form.controls.username.setValue(data.profile.username);
-    //   this.form.controls.bio.setValue(data.profile.bio);
-    //   this.form.controls.image.setValue(data.profile.image);
-    // })
   }
 
   logout() {
     localStorage.clear();
-    this.auth.sendStatus(false);
+    // this.auth.sendStatus(false);
+    this.auth.updateStatusAuth.emit(true);
     this.router.navigate(['/login']);
   }
 
   onSubmit() {
-    this.getProfile.updateProfile(this.form.value).subscribe((data: User) => {
+    this.profileService.updateProfile(this.form.value).subscribe((data: User) => {
       this.submitted = true;
       localStorage.setItem('username', this.form.value.username);
       localStorage.setItem('email', this.form.value.email);

@@ -1,3 +1,4 @@
+import { AppGlobalService } from './../../services/app-global.service';
 import { ArticleService } from './../../services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -12,7 +13,6 @@ export class HomeComponent implements OnInit {
   checkLoggedIn: boolean = localStorage.getItem('token') === null ? false : true;
   token: string = localStorage.getItem('token');
   listArticles: Article[];
-  urlPic = 'https://static.productionready.io/images/smiley-cyrus.jpg';
   tags;
   countArticles: number;
   countPages: number;
@@ -24,17 +24,18 @@ export class HomeComponent implements OnInit {
   global = true;
   checkYourFeed: boolean = false;
 
-  constructor(private getArticle: ArticleService,
-    private router: Router
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    public app: AppGlobalService
   ) { }
 
   ngOnInit() {
     if (this.checkLoggedIn) {
-      this.getArticle.getArticles(this.offset).subscribe(data => {
+      this.articleService.getArticles(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
-        // console.log(data);
 
         for (let i = 1; i <= this.countPages; i++) {
           this.pages.push(i);
@@ -45,11 +46,11 @@ export class HomeComponent implements OnInit {
 
       })
 
-      this.getArticle.getTags().subscribe(data => {
+      this.articleService.getTags().subscribe(data => {
         this.tags = data['tags'];
       })
     } else {
-      this.getArticle.getArticleNoAuth(this.offset).subscribe(data => {
+      this.articleService.getArticleNoAuth(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
@@ -60,7 +61,7 @@ export class HomeComponent implements OnInit {
 
       })
 
-      this.getArticle.getTagNoAuth().subscribe(data => {
+      this.articleService.getTagNoAuth().subscribe(data => {
         this.tags = data['tags'];
       })
     }
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
   }
 
   handlePagination(i) {
-    this.getArticle.getArticles(i).subscribe(data => {
+    this.articleService.getArticles(i).subscribe(data => {
       this.listArticles = data['articles'];
     })
     this.currentIndex = i;
@@ -76,7 +77,7 @@ export class HomeComponent implements OnInit {
 
   handleTag(tag) {
     if (!this.checkLoggedIn) {
-      this.getArticle.getArticleNoAuth(this.offset, tag).subscribe(data => {
+      this.articleService.getArticleNoAuth(this.offset, tag).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
@@ -90,17 +91,14 @@ export class HomeComponent implements OnInit {
       this.global = false;
       this.checkYourFeed = false;
     } else {
-      this.getArticle.getArticles(this.offset, tag).subscribe(data => {
+      this.articleService.getArticles(this.offset, tag).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
-        // console.log(this.pages, this.countPages);
         this.pages = [];
         for (let i = 1; i <= this.countPages; i++) {
           this.pages.push(i);
         }
-        // console.log(data);
-
       })
       this.checkTabTag = true;
       this.nameTag = tag;
@@ -115,7 +113,7 @@ export class HomeComponent implements OnInit {
       this.global = true;
       this.checkYourFeed = false;
       this.checkTabTag = false;
-      this.getArticle.getArticleNoAuth(this.offset).subscribe(data => {
+      this.articleService.getArticleNoAuth(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
@@ -127,7 +125,7 @@ export class HomeComponent implements OnInit {
       this.global = true;
       this.checkYourFeed = false;
       this.checkTabTag = false;
-      this.getArticle.getArticles(this.offset).subscribe(data => {
+      this.articleService.getArticles(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
         this.countPages = Math.ceil(this.countArticles / 10);
@@ -154,14 +152,14 @@ export class HomeComponent implements OnInit {
         }
         return item;
       })
-      checkFavorite ? this.getArticle.unFavoriteArticle(slug).subscribe() : this.getArticle.favoriteArticle(slug).subscribe();
+      checkFavorite ? this.articleService.unFavoriteArticle(slug).subscribe() : this.articleService.favoriteArticle(slug).subscribe();
     }
 
   }
 
 
   handleYourFeed() {
-    this.getArticle.getFeedArticle(this.token).subscribe(data => {
+    this.articleService.getFeedArticle(this.token).subscribe(data => {
       this.checkYourFeed = true;
       this.global = false;
       this.listArticles = data['articles'];

@@ -1,3 +1,4 @@
+import { AppGlobalService } from './app-global.service';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,55 +9,42 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   loginEmit = new EventEmitter<any>();
-  url;
-  body;
   user = new Subject<boolean>();
+  updateStatusAuth = new EventEmitter();
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    public app: AppGlobalService
   ) { }
 
-  login(value) {
+  login(payload) {
     return this.http.post('https://conduit.productionready.io/api/users/login', {
-      'user': value
-    }, {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
-    })
+      'user': payload
+    }, this.app.HttpOptionsForLogin);
   }
 
-  signUp(value) {
+  signUp(payload) {
     return this.http.post('https://conduit.productionready.io/api/users', {
-      'user': value
-    }, {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'observe': 'response'
-      }
-    })
+      'user': payload
+    }, this.app.HttpOptionsForSignUp);
   }
 
   changeLogin(userName, token) {
     if (userName) {
       localStorage.setItem("token", token);
-      console.log(userName);
-
-      // localStorage.setItem('username', userName);
-
     } else {
       localStorage.removeItem('token');
     }
-    this.loginEmit.emit(userName);
+    // this.loginEmit.emit(userName);
     this.router.navigate(['/']);
   }
 
-  sendStatus(status: boolean) {
-    this.user.next(status);
-  }
+  // sendStatus(status: boolean) {
+  //   this.user.next(status);
+  // }
 
-  getStatus() {
-    return this.user.asObservable();
-  }
+  // getStatus() {
+  //   return this.user.asObservable();
+  // }
 }

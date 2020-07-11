@@ -10,14 +10,6 @@
 
                 <ul *ngFor='let item of error' class="error-messages">
                     <li *ngIf='submitted && error'>{{item}} {{a[item]}}</li>
-                    <!-- <li *ngIf='submitted && form.controls.username.errors?.required'>User name is required. Try again!</li>
-            <li *ngIf='submitted && form.controls.email.errors?.email'>Email is invalid. Try again!</li>
-            <li *ngIf='submitted && form.controls.email.errors?.required'>Email is required. Try again!</li>
-            <li *ngIf='submitted && form.controls.password.errors?.minlength'>Password need at least 8 characters. Try
-              again!</li>
-            <li *ngIf='submitted && form.controls.password.errors?.maxlength'>Password maximum length of 20 characters. Try
-              again!</li>
-            <li *ngIf='submitted && form.controls.password.errors?.required'>Password is required. Try again!</li> -->
                 </ul>
 
                 <form [formGroup]='form' (ngSubmit)="onSubmit()">

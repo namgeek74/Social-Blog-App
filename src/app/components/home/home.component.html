@@ -31,7 +31,7 @@
                     <div class="article-meta">
                         <a [routerLink]="['/profile/', item.author.username ]"
                             routerLinkActive="router-link-active"><img
-                                [src]="item.author.image != undefined ? item.author.image : urlPic" /></a>
+                                [src]="item.author.image != undefined ? item.author.image : app.URLPictureDefault" /></a>
                         <div class="info">
                             <a [routerLink]="['/profile/', item.author.username ]"
                                 class="author">{{item.author.username}}</a>

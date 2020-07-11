@@ -10,10 +10,6 @@
 
                 <ul class="error-messages">
                     <li *ngIf='submitted && error'>Email or password {{error}}</li>
-                    <!-- <li *ngIf='submitted && form.controls.email.errors?.email'>Email is invalid. Try again!</li>
-            <li *ngIf='submitted && form.controls.email.errors?.required'>Email is required. Try again!</li>
-            <li *ngIf='submitted && form.controls.password.errors?.minlength'>Password need at least 8 characters. Try again!</li>
-            <li *ngIf='submitted && form.controls.password.errors?.required'>Password is required. Try again!</li> -->
                 </ul>
 
                 <form name='login' (ngSubmit)="onSubmit()" [formGroup]="form">

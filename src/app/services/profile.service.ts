@@ -1,3 +1,4 @@
+import { AppGlobalService } from './app-global.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,7 +7,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    public app: AppGlobalService
+  ) { }
 
   getProfile(username) {
     return this.http.get(`https://conduit.productionready.io/api/profiles/${username}`);
@@ -19,10 +23,7 @@ export class ProfileService {
         limit: '5',
         offset: offset
       },
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('token')}`
-      }
+      headers: this.app.Headers
     })
   }
 
@@ -43,11 +44,7 @@ export class ProfileService {
         limit: '5',
         offset: offset
       },
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('token')}`
-      }
-
+      headers: this.app.Headers
     });
   }
 
@@ -62,53 +59,24 @@ export class ProfileService {
   }
 
   follow(username: string) {
-    return this.http.post(`https://conduit.productionready.io/api/profiles/${username}/follow`, {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('token')}`
-      }
-    })
+    return this.http.post(`https://conduit.productionready.io/api/profiles/${username}/follow`, {}, this.app.HttpOptions);
   }
 
   unfollow(username: string) {
-    return this.http.delete(`https://conduit.productionready.io/api/profiles/${username}/follow`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('token')}`
-      }
-    })
+    return this.http.delete(`https://conduit.productionready.io/api/profiles/${username}/follow`, this.app.HttpOptions)
   }
 
   like(slug) {
-    return this.http.post(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
-      // obj để lưu sự thay đổi của data, không thay đổi gì nên để rỗng
-    }, {
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        Authorization: `Token ${localStorage.getItem('token')}`
-      }
-    });
+    return this.http.post(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {}, this.app.HttpOptions);
   }
 
   unlike(slug) {
-    return this.http.delete(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        Authorization: `Token ${localStorage.getItem('token')}`
-      }
-    });
+    return this.http.delete(`https://conduit.productionready.io/api/articles/${slug}/favorite`, this.app.HttpOptions);
   }
 
-  updateProfile(value) {
-    console.log(value);
-
+  updateProfile(payload) {
     return this.http.put('https://conduit.productionready.io/api/user', {
-      'user': value
-    }, {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': `Token ${localStorage.getItem('token')}`
-      }
-    })
+      'user': payload
+    }, this.app.HttpOptions);
   }
 }

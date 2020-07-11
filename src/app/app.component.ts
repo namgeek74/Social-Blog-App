@@ -12,16 +12,27 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    if(localStorage.getItem('token') === null) {
+    this.checkLogin();
+
+    // this.authService.getStatus().subscribe(status => {
+    //   this.checkLoggedIn = status;
+    // })
+
+    this.authService.updateStatusAuth.subscribe(data => {
+      if (data) {
+        this.checkLogin();
+      }
+    })
+  }
+
+  checkLogin() {
+    if (localStorage.getItem('token') === null) {
       this.checkLoggedIn = false;
-    }else {
+    } else {
       this.checkLoggedIn = true;
     }
-    this.authService.getStatus().subscribe(status => {
-      this.checkLoggedIn = status;
-    })
   }
 }
