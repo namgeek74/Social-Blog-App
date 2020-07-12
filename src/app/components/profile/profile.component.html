@@ -5,7 +5,7 @@
             <div class="row">
 
                 <div class="col-xs-12 col-md-10 offset-md-1">
-                    <img [src]="account?.image == undefined ? url : account.image" class="user-img" />
+                    <img [src]="account?.image == undefined ? app.URLPictureDefault : account.image" class="user-img" />
                     <h4>{{account?.username}}</h4>
                     <p>
                         {{account?.bio}}
@@ -63,20 +63,16 @@
                         <span>Read more...</span>
                     </a>
                 </div>
+                <div class="article-preview" *ngIf="!countArticles">
+                    <p>There are no articles available</p>
+                </div>
 
 
             </div>
 
         </div>
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" *ngFor="let item of pages; index as i"
-                    [ngClass]="i*5 === currentIndex ? 'active':''">
-                    <a class="page-link ng-binding" (click)="handlePagination(5*i)">{{item}}
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <app-pagination [countArticles]="countArticles" [currentIndex]="currentIndex"
+            (pageChange)="handlePagination($event)"></app-pagination>
 
     </div>
 

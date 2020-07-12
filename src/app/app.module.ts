@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackBarComponent } from './core/components/snack-bar/snack-bar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { PaginationComponent } from './core/components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SignUpComponent,
     ProfileComponent,
     SettingComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent],

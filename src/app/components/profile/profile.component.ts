@@ -1,3 +1,4 @@
+import { AppGlobalService } from './../../core/services/app-global.service';
 import { Component, OnInit } from '@angular/core';
 import { Article, Profile } from 'src/app/model/model';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -12,7 +13,6 @@ export class ProfileComponent implements OnInit {
   public message = "ID Profile not alive";
   checkLoggedIn: boolean = localStorage.getItem('token') === null ? false : true;
   account: Profile;
-  url: 'https://static.productionready.io/images/smiley-cyrus.jpg';
   offset = 0;
   listArticles: Article[];
   countArticles;
@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profile: ProfileService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public app: AppGlobalService
   ) { }
 
   ngOnInit() {
@@ -42,13 +43,6 @@ export class ProfileComponent implements OnInit {
             this.favorited = false;
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
-            this.countPages = Math.ceil(this.countArticles / 5);
-            for (let i = 1; i <= this.countPages; i++) {
-              this.pages.push(i);
-            }
-            if (this.pages.length === 1) {
-              this.pages = [];
-            }
           })
         } else {
           this.profile.getArticles(this.param, this.offset).subscribe(data => {
@@ -56,13 +50,6 @@ export class ProfileComponent implements OnInit {
             this.favorited = false;
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
-            this.countPages = Math.ceil(this.countArticles / 5);
-            for (let i = 1; i <= this.countPages; i++) {
-              this.pages.push(i);
-            }
-            if (this.pages.length === 1) {
-              this.pages = [];
-            }
           }, error => {
             alert("Sai id profile");
             this.router.navigate(['']);
@@ -76,13 +63,6 @@ export class ProfileComponent implements OnInit {
             this.favorited = false;
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
-            this.countPages = Math.ceil(this.countArticles / 5);
-            for (let i = 1; i <= this.countPages; i++) {
-              this.pages.push(i);
-            }
-            if (this.pages.length === 1) {
-              this.pages = [];
-            }
           }, error => {
             this.router.navigate(['']);
           })
@@ -92,13 +72,6 @@ export class ProfileComponent implements OnInit {
             this.favorited = false;
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
-            this.countPages = Math.ceil(this.countArticles / 5);
-            for (let i = 1; i <= this.countPages; i++) {
-              this.pages.push(i);
-            }
-            if (this.pages.length === 1) {
-              this.pages = [];
-            }
           }, error => {
             this.router.navigate(['']);
           })
@@ -118,8 +91,6 @@ export class ProfileComponent implements OnInit {
       this.account = data['profile'];
       this.renderFollow = this.account.following ? 'UnFollow' : 'Follow';
     }, error => {
-      // console.log(error);
-      // console.log("-----------------------------");
       alert(this.message);
       this.router.navigate(['']);
     })

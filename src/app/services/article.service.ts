@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AppGlobalService } from '../core/services/app-global.service';
 
 @Injectable({
@@ -48,7 +48,7 @@ export class ArticleService {
     return this.http.delete(`https://conduit.productionready.io/api/articles/${slug}/favorite`, this.app.HttpOptions);
   }
 
-  getFeedArticle(token) {
+  getFeedArticle() {
     return this.http.get('https://conduit.productionready.io/api/articles/feed', this.app.HttpOptions);
   }
 

@@ -12,7 +12,6 @@ import { AppGlobalService } from 'src/app/core/services/app-global.service';
 })
 export class HomeComponent implements OnInit {
   checkLoggedIn: boolean = localStorage.getItem('token') === null ? false : true;
-  token: string = localStorage.getItem('token');
   listArticles: Article[];
   tags;
   countArticles: number;
@@ -28,8 +27,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private articleService: ArticleService,
     private router: Router,
-    public app: AppGlobalService,
-    private snackBar: SnackBarService
+    public app: AppGlobalService
   ) { }
 
   ngOnInit() {
@@ -37,15 +35,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticles(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
-        if (this.pages.length === 1) {
-          this.pages = [];
-        }
-
       })
 
       this.articleService.getTags().subscribe(data => {
@@ -55,12 +44,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticleNoAuth(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
-
       })
 
       this.articleService.getTagNoAuth().subscribe(data => {
@@ -82,11 +65,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticleNoAuth(this.offset, tag).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-        this.pages = [];
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
       })
       this.checkTabTag = true;
       this.nameTag = tag;
@@ -96,11 +74,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticles(this.offset, tag).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-        this.pages = [];
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
       })
       this.checkTabTag = true;
       this.nameTag = tag;
@@ -118,10 +91,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticleNoAuth(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
       })
     } else {
       this.global = true;
@@ -130,10 +99,6 @@ export class HomeComponent implements OnInit {
       this.articleService.getArticles(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
-        this.countPages = Math.ceil(this.countArticles / 10);
-        for (let i = 1; i <= this.countPages; i++) {
-          this.pages.push(i);
-        }
       })
     }
 
@@ -161,15 +126,12 @@ export class HomeComponent implements OnInit {
 
 
   handleYourFeed() {
-    this.articleService.getFeedArticle(this.token).subscribe(data => {
+    this.articleService.getFeedArticle().subscribe(data => {
       this.checkYourFeed = true;
       this.global = false;
+      this.checkTabTag = false;
       this.listArticles = data['articles'];
       this.countArticles = data['articlesCount'];
-      this.countPages = Math.ceil(this.countArticles / 10);
-      for (let i = 1; i <= this.countPages; i++) {
-        this.pages.push(i);
-      }
     })
   }
 }
