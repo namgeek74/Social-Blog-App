@@ -1,3 +1,5 @@
+import { SnackBarService } from './../../core/services/snack-bar.service';
+import { AppGlobalService } from 'src/app/core/services/app-global.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,7 +17,11 @@ export class SignInComponent implements OnInit {
   });
   error;
   submitted = false;
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    public app: AppGlobalService,
+    private snackBar: SnackBarService
+  ) { }
 
   ngOnInit() {
   }
@@ -32,6 +38,7 @@ export class SignInComponent implements OnInit {
       this.authService.updateStatusAuth.emit(true);
     }, (error) => {
       this.error = error.error.errors['email or password'][0];
+      this.snackBar.open(this.app.TypeOfSnackBar.Error, this.app.MessageSnackBar.Error);
     });
   }
 }

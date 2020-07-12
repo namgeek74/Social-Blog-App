@@ -1,3 +1,5 @@
+import { AppGlobalService } from 'src/app/core/services/app-global.service';
+import { SnackBarService } from './../../core/services/snack-bar.service';
 import { Component, OnInit } from '@angular/core';
 import { Article, Comment } from 'src/app/model/model';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -26,7 +28,9 @@ export class ArticleComponent implements OnInit {
   constructor(
     private article: ArticleService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: SnackBarService,
+    public app: AppGlobalService
   ) { }
 
   ngOnInit() {
@@ -50,11 +54,13 @@ export class ArticleComponent implements OnInit {
         this.renderFollow = this.singleArticle.author.following ? 'UnFollow' : 'Follow';
         this.renderFavorite = this.singleArticle.favorited ? 'Unfavorite' : 'Favorite';
       }, error => {
+        this.snackBar.open(this.app.TypeOfSnackBar.Error, this.app.MessageSnackBar.Error);
         this.router.navigate(['']);
       })
       this.article.getComment(this.idSlug).subscribe(data => {
         this.renderComment = data['comments'];
       }, error => {
+        this.snackBar.open(this.app.TypeOfSnackBar.Error, this.app.MessageSnackBar.Error);
         this.router.navigate(['']);
       })
     }

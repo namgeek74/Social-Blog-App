@@ -1,6 +1,6 @@
-import { AppGlobalService } from './app-global.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { AppGlobalService } from '../core/services/app-global.service';
 
 @Injectable({
   providedIn: 'root'

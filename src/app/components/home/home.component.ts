@@ -1,8 +1,9 @@
-import { AppGlobalService } from './../../services/app-global.service';
+import { SnackBarService } from './../../core/services/snack-bar.service';
 import { ArticleService } from './../../services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Article } from 'src/app/model/model';
+import { AppGlobalService } from 'src/app/core/services/app-global.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private articleService: ArticleService,
     private router: Router,
-    public app: AppGlobalService
+    public app: AppGlobalService,
+    private snackBar: SnackBarService
   ) { }
 
   ngOnInit() {

@@ -1,8 +1,8 @@
-import { AppGlobalService } from './app-global.service';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AppGlobalService } from '../core/services/app-global.service';
 
 @Injectable({
   providedIn: 'root'

@@ -34,4 +34,16 @@ export class AppGlobalService {
   }
 
   public URLPictureDefault = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+
+  public TypeOfSnackBar = {
+    Success: 'Success',
+    Warning: 'Warning',
+    Error: 'Error'
+  }
+
+  public MessageSnackBar = {
+    Success: '',
+    Warning: '',
+    Error: 'An error has occurred'
+  }
 }

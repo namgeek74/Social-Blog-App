@@ -12,6 +12,8 @@ import { SettingComponent } from './components/setting/setting.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SnackBarComponent } from './core/components/snack-bar/snack-bar.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -22,16 +24,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SignInComponent,
     SignUpComponent,
     ProfileComponent,
-    SettingComponent
+    SettingComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    SnackBarComponent
+  ]
 })
 export class AppModule { }
