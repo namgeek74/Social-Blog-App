@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../core/services/snack-bar.service';
 import { AppGlobalService } from './../../core/services/app-global.service';
 import { Component, OnInit } from '@angular/core';
 import { Article, Profile } from 'src/app/model/model';
@@ -30,7 +31,8 @@ export class ProfileComponent implements OnInit {
     private profile: ProfileService,
     private router: Router,
     private route: ActivatedRoute,
-    public app: AppGlobalService
+    public app: AppGlobalService,
+    private snackBar: SnackBarService
   ) { }
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class ProfileComponent implements OnInit {
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
           }, error => {
-            alert("Sai id profile");
+            this.snackBar.open(this.app.TypeOfSnackBar.Error, this.message);
             this.router.navigate(['']);
           })
         }
@@ -64,6 +66,7 @@ export class ProfileComponent implements OnInit {
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
           }, error => {
+            this.snackBar.open(this.app.TypeOfSnackBar.Error, this.app.MessageSnackBar.Error);
             this.router.navigate(['']);
           })
         } else {
@@ -73,6 +76,7 @@ export class ProfileComponent implements OnInit {
             this.listArticles = data['articles'];
             this.countArticles = data['articlesCount'];
           }, error => {
+            this.snackBar.open(this.app.TypeOfSnackBar.Error, this.app.MessageSnackBar.Error);
             this.router.navigate(['']);
           })
         }
@@ -91,7 +95,7 @@ export class ProfileComponent implements OnInit {
       this.account = data['profile'];
       this.renderFollow = this.account.following ? 'UnFollow' : 'Follow';
     }, error => {
-      alert(this.message);
+      this.snackBar.open(this.app.TypeOfSnackBar.Error, this.message);
       this.router.navigate(['']);
     })
   }
