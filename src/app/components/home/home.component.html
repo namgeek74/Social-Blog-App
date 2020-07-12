@@ -14,14 +14,14 @@
                 <div class="feed-toggle">
                     <ul class="nav nav-pills outline-active">
                         <li class="nav-item" (click)="handleYourFeed()">
-                            <a class="nav-link" *ngIf=checkLoggedIn [ngClass]="checkYourFeed ? 'active': ''">Your
+                            <a class="nav-link" *ngIf=checkLoggedIn [ngClass]="statusYourFeed ? 'active': ''">Your
                                 Feed</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [ngClass]="global ? 'active' : ''" (click)="handleGlobal()">Global Feed
+                            <a class="nav-link" [ngClass]="statusGlobal ? 'active' : ''" (click)="handleGlobal()">Global Feed
                             </a>
                         </li>
-                        <li class="nav-item" *ngIf="checkTabTag">
+                        <li class="nav-item" *ngIf="statusTab">
                             <a class="nav-link active">#{{nameTag}}</a>
                         </li>
                     </ul>

@@ -1,4 +1,3 @@
-import { SnackBarService } from './../../core/services/snack-bar.service';
 import { ArticleService } from './../../services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -19,10 +18,10 @@ export class HomeComponent implements OnInit {
   pages = [];
   offset = 0;
   currentIndex = 0;
-  checkTabTag = false;
+  statusTab = false;
   nameTag: string;
-  global = true;
-  checkYourFeed: boolean = false;
+  statusGlobal = true;
+  statusYourFeed: boolean = false;
 
   constructor(
     private articleService: ArticleService,
@@ -66,36 +65,36 @@ export class HomeComponent implements OnInit {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
       })
-      this.checkTabTag = true;
+      this.statusTab = true;
       this.nameTag = tag;
-      this.global = false;
-      this.checkYourFeed = false;
+      this.statusGlobal = false;
+      this.statusYourFeed = false;
     } else {
       this.articleService.getArticles(this.offset, tag).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
       })
-      this.checkTabTag = true;
+      this.statusTab = true;
       this.nameTag = tag;
-      this.global = false;
-      this.checkYourFeed = false;
+      this.statusGlobal = false;
+      this.statusYourFeed = false;
     }
 
   }
 
   handleGlobal() {
     if (!this.checkLoggedIn) {
-      this.global = true;
-      this.checkYourFeed = false;
-      this.checkTabTag = false;
+      this.statusGlobal = true;
+      this.statusYourFeed = false;
+      this.statusTab = false;
       this.articleService.getArticleNoAuth(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
       })
     } else {
-      this.global = true;
-      this.checkYourFeed = false;
-      this.checkTabTag = false;
+      this.statusGlobal = true;
+      this.statusYourFeed = false;
+      this.statusTab = false;
       this.articleService.getArticles(this.offset).subscribe(data => {
         this.listArticles = data['articles'];
         this.countArticles = data['articlesCount'];
@@ -127,9 +126,9 @@ export class HomeComponent implements OnInit {
 
   handleYourFeed() {
     this.articleService.getFeedArticle().subscribe(data => {
-      this.checkYourFeed = true;
-      this.global = false;
-      this.checkTabTag = false;
+      this.statusYourFeed = true;
+      this.statusGlobal = false;
+      this.statusTab = false;
       this.listArticles = data['articles'];
       this.countArticles = data['articlesCount'];
     })
